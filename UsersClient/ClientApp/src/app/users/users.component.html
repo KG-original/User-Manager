@@ -1,0 +1,47 @@
+<div class="jumbotron" style="background-color: white">
+  <h1 class="dispaly-4">User Manager</h1>
+
+
+
+  <div style="text-align:right; margin-bottom:5px">
+    <button (click)="openFormModal()" type="button" class="btn btn-success">Add User <i class="fas fa-plus"></i></button>
+  </div>
+  <div class="text-center">
+    <table class="table table-hover">
+
+      <!--Table head-->
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Id Number</th>
+          <th>Passport Number</th>
+          <th>Mobile Number</th>
+          <th>Email Address</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <!--Table head-->
+      <!--Table body-->
+      <tbody>
+        <tr *ngFor="let user of service.list; let i = index">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{user.name}}</td>
+          <td>{{user.surname}}</td>
+          <td>{{user.idNumber}}</td>
+          <td>{{user.passportNumber}}</td>
+          <td>{{user.contactDetails.length > 0 ? user.contactDetails[0].mobileNumber : ''}}</td>
+          <td>{{user.contactDetails.length > 0 ? user.contactDetails[0].emailAddress : ''}}</td>
+          <td><i style="color:blue; cursor: pointer" (click)="openFormModal(user)" class="fas fa-pencil-alt"></i></td>
+          <td><i style="color:red; cursor: pointer;" (click)="deleteUser(user)" class="fas fa-trash"></i></td>
+        </tr>
+        <tr>
+      </tbody>
+      <!--Table body-->
+
+    </table>
+
+  </div>
+</div>
