@@ -1,117 +1,196 @@
 <div class="modal-header">
-  <h4 class="modal-title">User Details</h4>
+  <h4 class="modal-title">{{modalTitle}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="false">&times;</span>
   </button>
 </div>
-<form [formGroup]="myForm" (ngSubmit)="submitForm()">
-  <div style="margin-top:5px" class="modal-boy">
-    <div class="container">
 
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text bg-white">
-              <i class="fas fa-user-circle">
-              </i>
-            </div>
-          </div>
-          <input type="text"
-                 name="name"
-                 placeholder="Name"
-                 class="form-control"
-                 formControlName="name"
-                 [disabled]="!newForm"
-                 required/>
+<mat-tab-group style="overflow: hidden">
+  <mat-tab *ngIf="!newForm" label="Details">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 img">
+          <img style="max-width:100%;max-height:100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q" alt="" class="img-rounded">
+          <blockquote>
+            <small><cite title="About user">{{user.aboutUser}}something for now to see how it will look</cite></small>
+          </blockquote>
         </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text bg-white">
-              <i class="fas fa-user-circle">
-              </i>
-            </div>
+        <div  class="col-md-5 details">
+          <blockquote>
+            <h5> {{user.name + ' ' + user.surname}}</h5>
+          </blockquote>
+          <hr />
+          <div>
+            <i class="fa fa-id-card"></i> <b> Id Number</b>
+            <br />
+            <p style="color:grey">{{user.idNumber}}</p>
           </div>
-          <input type="text"
-                 name="surname"
-                 placeholder="Surname"
-                 class="form-control"
-                 formControlName="surname"
-                 required/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text bg-white">
-              <i class="fas fa-id-card">
-              </i>
-            </div>
+          <hr />
+          <div>
+            <i class="fa fa-id-card"></i> <b> Passport Number</b>
+            <br />
+            <p style="color:grey">{{user.passportNumber}}</p>
           </div>
-          <input type="text"
-                 name="idnumber"
-                 placeholder="13 Digit ID Number"
-                 class="form-control"
-                 formControlName="idNumber"
-                  maxlength="13" minlength="13"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text bg-white">
-              <i class="fas fa-id-card">
-              </i>
-            </div>
+          <hr />
+          <div>
+            <i class="fa fa-mobile-alt"></i> <b> Mobile Number</b>
+            <br />
+            <p style="color:grey">{{user.contactDetails[0].mobileNumber}}</p>
           </div>
-          <input type="text"
-                 name="passportnumber"
-                 placeholder="10 Digit Passport Number"
-                 class="form-control"
-                 formControlName="passportNumber"
-                 maxlength="10" minlength="10"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text bg-white">
-              <i class="fas fa-mobile-alt">
-              </i>
-            </div>
+          <hr />
+          <div>
+            <i class="fa fa-envelope"></i> <b> Email Address</b>
+            <br />
+            <p style="color:grey">{{user.contactDetails[0].emailAddress}}</p>
           </div>
-          <input type="text"
-                 name="mobilenumber"
-                 placeholder="10 Digit Mobile Number"
-                 class="form-control"
-                 formControlName="mobileNumber"
-                 required maxlength="10" minlength="10"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <div class="input-group-text bg-white">
-              <i class="fas fa-envelope">
-              </i>
-            </div>
-          </div>
-          <input type="text"
-                 name="emailaddress"
-                 placeholder="Email Address"
-                 class="form-control"
-                 formControlName="emailAddress" />
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer" style="width:100%">
-    <div class="form-group">
-      <button class="btn btn-success btn-block" [disabled]="myForm.invalid">
-        <i class="fas fa-database"></i>
-        Save
-      </button>
-    </div>  
-  </div>
-</form>
+
+
+  </mat-tab>
+  <mat-tab label="Settings">
+    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+      <div style="margin-top:5px" class="modal-boy">
+        <div class="container">
+
+          <div class="row">
+
+            <div class="col-xs-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <img [src]="ImageUrl" style="border-radius: 5px; display:block; margin-left:auto; margin-right: auto; width: 50%; height:100px" />
+                <div style="margin-top: 10px" class="upload-btn-wrapper">
+                  <button class="uploadbtn">Upload an image</button>
+                  <input type="file" #image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="image" />
+                </div>
+              </div>
+              <div style="position: relative" class="form-group">
+                <textarea style="height:155px" formControlName="aboutUser" #aboutuser class="form-control" name="aboutUser" placeholder="Give a brief description of yourself" required></textarea>
+                <span style="position: absolute; bottom: 10px; left: 10px;" class="fa fa-commenting"></span>
+              </div>
+            </div>
+
+            <div class="col-xs-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                      <i class="fas fa-user-circle">
+                      </i>
+                    </div>
+                  </div>
+                  <input type="text"
+                         #name
+                         name="name"
+                         placeholder="Name"
+                         class="form-control"
+                         formControlName="name"
+                         [disabled]="!newForm"
+                         required />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                      <i class="fas fa-user-circle">
+                      </i>
+                    </div>
+                  </div>
+                  <input type="text"
+                         #surname
+                         name="surname"
+                         placeholder="Surname"
+                         class="form-control"
+                         formControlName="surname"
+                         required />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                      <i class="fas fa-id-card">
+                      </i>
+                    </div>
+                  </div>
+                  <input type="text"
+                         #idnumber
+                         name="idnumber"
+                         placeholder="13 Digit ID Number"
+                         class="form-control"
+                         formControlName="idNumber"
+                         maxlength="13" minlength="13" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                      <i class="fas fa-id-card">
+                      </i>
+                    </div>
+                  </div>
+                  <input type="text"
+                         #passportnumber
+                         name="passportnumber"
+                         placeholder="10 Digit Passport Number"
+                         class="form-control"
+                         formControlName="passportNumber"
+                         maxlength="10" minlength="10" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                      <i style="padding-right:7px" class="fas fa-mobile-alt">
+                      </i>
+                    </div>
+                  </div>
+                  <input type="text"
+                         #mobilenumber
+                         name="mobilenumber"
+                         placeholder="10 Digit Mobile Number"
+                         class="form-control"
+                         formControlName="mobileNumber"
+                         required maxlength="10" minlength="10" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                      <i class="fas fa-envelope">
+                      </i>
+                    </div>
+                  </div>
+                  <input type="text"
+                         #emailaddress
+                         name="emailaddress"
+                         placeholder="Email Address"
+                         class="form-control"
+                         formControlName="emailAddress" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="width:100%">
+            
+            <div class="form-group" style="width:100%">
+              <div class="btn-group d-flex" role="group" aria-label="">
+                  <button (click)="deleteUser(user)" class="btn btn-danger w-100" [hidden]="newForm" ><i class="fas fa-trash"></i> Delete</button>
+                  <button class="btn btn-success w-100" [disabled]="image.value == '' || myForm.invalid"><i class="fas fa-database"></i> Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </mat-tab>
+</mat-tab-group>
+
+  
+

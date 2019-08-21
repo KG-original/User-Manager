@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsersFormModalComponent } from './../users-form-modal/users-form-modal.component';
-//import { Users } from '../shared/users.model';
 import { UsersService } from '../shared/users.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,28 +18,7 @@ export class UsersComponent implements OnInit {
     this.service.refreshList();
   }
 
-  deleteUser(user) {
-    //Update contact first and then update user
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(
-        res => {
-          this.service.deleteUser(user.name).subscribe(
-            res => {
-              console.log(res);
-              this.toastr.warning('User deleted successfully', 'User Manager');
-              this.service.refreshList();
-            },
-            err => {
-              console.log(err);
-            }
-          );
-        },
-        err => {
-          console.log(err);
-        }
-      )
-    }
-  }
+  
 
   openFormModal(user) {
     if (user) {

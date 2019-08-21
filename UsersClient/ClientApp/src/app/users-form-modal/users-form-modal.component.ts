@@ -2,11 +2,10 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-//import { Observable } from 'rxjs';
-//import { Version } from '@angular/core';
 import { Users } from '../shared/users.model';
 import { UsersService } from '../shared/users.service';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-users-form-modal',
@@ -19,6 +18,9 @@ export class UsersFormModalComponent implements OnInit {
   @Input() public user;
   myForm: FormGroup;
   newForm: boolean;
+  ImageUrl: string = "/assets/images/person-placeholder.png";
+  fileToUpload: File = null;
+  modalTitle: string;
 
   constructor( private toastr: ToastrService, private service: UsersService, private httpService: HttpClient, public activeModal: NgbActiveModal, private formBuilder: FormBuilder) {
     if (sessionStorage.getItem("CurrentUser"))
@@ -26,19 +28,57 @@ export class UsersFormModalComponent implements OnInit {
     else
       this.newForm = true;
     this.user = sessionStorage.getItem("CurrentUser") ? JSON.parse(sessionStorage.getItem("CurrentUser")) : {};
+    this.modalTitle = this.user.name ? 'User' : 'New User';
     //Check user is new and add contactdetails field for length check in the createform method
     if (!this.user.name) this.user.contactDetails = [];
     this.createForm();
   }
 
+  deleteUser(user) {
+    //Update contact first and then update user
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(
+        res => {
+          this.service.deleteUser(user.name).subscribe(
+            res => {
+              console.log(res);
+              this.toastr.warning('User deleted successfully', 'User Manager');
+              this.service.refreshList();
+            },
+            err => {
+              console.log(err);
+            }
+          );
+        },
+        err => {
+          console.log(err);
+        }
+      )
+    }
+  }
+
+  handleFileInput(file: FileList) {
+    this.fileToUpload = file.item(0);
+
+    //Show image preview
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.ImageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
+
+  }
+
   private createForm() {
-      this.myForm = this.formBuilder.group({
-        name: this.user ? this.user.name: '',
-        surname: this.user ? this.user.surname : '',
-        idNumber: this.user ? this.user.idNumber : '',
-        passportNumber: this.user ? this.user.passportNumber : '',
-        mobileNumber : this.user.contactDetails.length > 0 ? this.user.contactDetails[0].mobileNumber : '',
-        emailAddress: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].emailAddress : '',
+    this.myForm = this.formBuilder.group({
+      name: this.user ? this.user.name : '',
+      surname: this.user ? this.user.surname : '',
+      idNumber: this.user ? this.user.idNumber : '',
+      passportNumber: this.user ? this.user.passportNumber : '',
+      mobileNumber: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].mobileNumber : '',
+      emailAddress: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].emailAddress : '',
+      aboutUser: this.user.aboutUser ? this.user.aboutUser : '',
+      image: this.user.image > 0 ? this.user.image : null,
     });
     if (this.newForm == false) this.myForm.controls['name'].disable();
   }

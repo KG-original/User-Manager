@@ -41,7 +41,7 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-header\">\r\n  <h4 class=\"modal-title\">User Details</h4>\r\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click')\">\r\n    <span aria-hidden=\"false\">&times;</span>\r\n  </button>\r\n</div>\r\n<form [formGroup]=\"myForm\" (ngSubmit)=\"submitForm()\">\r\n  <div style=\"margin-top:5px\" class=\"modal-boy\">\r\n    <div class=\"container\">\r\n\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-prepend\">\r\n            <div class=\"input-group-text bg-white\">\r\n              <i class=\"fas fa-user-circle\">\r\n              </i>\r\n            </div>\r\n          </div>\r\n          <input type=\"text\"\r\n                 name=\"name\"\r\n                 placeholder=\"Name\"\r\n                 class=\"form-control\"\r\n                 formControlName=\"name\"\r\n                 [disabled]=\"!newForm\"\r\n                 required/>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-prepend\">\r\n            <div class=\"input-group-text bg-white\">\r\n              <i class=\"fas fa-user-circle\">\r\n              </i>\r\n            </div>\r\n          </div>\r\n          <input type=\"text\"\r\n                 name=\"surname\"\r\n                 placeholder=\"Surname\"\r\n                 class=\"form-control\"\r\n                 formControlName=\"surname\"\r\n                 required/>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-prepend\">\r\n            <div class=\"input-group-text bg-white\">\r\n              <i class=\"fas fa-id-card\">\r\n              </i>\r\n            </div>\r\n          </div>\r\n          <input type=\"text\"\r\n                 name=\"idnumber\"\r\n                 placeholder=\"13 Digit ID Number\"\r\n                 class=\"form-control\"\r\n                 formControlName=\"idNumber\"\r\n                  maxlength=\"13\" minlength=\"13\"/>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-prepend\">\r\n            <div class=\"input-group-text bg-white\">\r\n              <i class=\"fas fa-id-card\">\r\n              </i>\r\n            </div>\r\n          </div>\r\n          <input type=\"text\"\r\n                 name=\"passportnumber\"\r\n                 placeholder=\"10 Digit Passport Number\"\r\n                 class=\"form-control\"\r\n                 formControlName=\"passportNumber\"\r\n                 maxlength=\"10\" minlength=\"10\"/>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-prepend\">\r\n            <div class=\"input-group-text bg-white\">\r\n              <i class=\"fas fa-mobile-alt\">\r\n              </i>\r\n            </div>\r\n          </div>\r\n          <input type=\"text\"\r\n                 name=\"mobilenumber\"\r\n                 placeholder=\"10 Digit Mobile Number\"\r\n                 class=\"form-control\"\r\n                 formControlName=\"mobileNumber\"\r\n                 required maxlength=\"10\" minlength=\"10\"/>\r\n        </div>\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-prepend\">\r\n            <div class=\"input-group-text bg-white\">\r\n              <i class=\"fas fa-envelope\">\r\n              </i>\r\n            </div>\r\n          </div>\r\n          <input type=\"text\"\r\n                 name=\"emailaddress\"\r\n                 placeholder=\"Email Address\"\r\n                 class=\"form-control\"\r\n                 formControlName=\"emailAddress\" />\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"modal-footer\" style=\"width:100%\">\r\n    <div class=\"form-group\">\r\n      <button class=\"btn btn-success btn-block\" [disabled]=\"myForm.invalid\">\r\n        <i class=\"fas fa-database\"></i>\r\n        Save\r\n      </button>\r\n    </div>  \r\n  </div>\r\n</form>\r\n"
+module.exports = "<div class=\"modal-header\">\r\n  <h4 class=\"modal-title\">{{modalTitle}}</h4>\r\n  <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click')\">\r\n    <span aria-hidden=\"false\">&times;</span>\r\n  </button>\r\n</div>\r\n\r\n<mat-tab-group style=\"overflow: hidden\">\r\n  <mat-tab *ngIf=\"!newForm\" label=\"Details\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"col-md-6 img\">\r\n          <img style=\"max-width:100%;max-height:100%\" src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q\" alt=\"\" class=\"img-rounded\">\r\n          <blockquote>\r\n            <small><cite title=\"About user\">{{user.aboutUser}}something for now to see how it will look</cite></small>\r\n          </blockquote>\r\n        </div>\r\n        <div  class=\"col-md-5 details\">\r\n          <blockquote>\r\n            <h5> {{user.name + ' ' + user.surname}}</h5>\r\n          </blockquote>\r\n          <hr />\r\n          <div>\r\n            <i class=\"fa fa-id-card\"></i> <b> Id Number</b>\r\n            <br />\r\n            <p style=\"color:grey\">{{user.idNumber}}</p>\r\n          </div>\r\n          <hr />\r\n          <div>\r\n            <i class=\"fa fa-id-card\"></i> <b> Passport Number</b>\r\n            <br />\r\n            <p style=\"color:grey\">{{user.passportNumber}}</p>\r\n          </div>\r\n          <hr />\r\n          <div>\r\n            <i class=\"fa fa-mobile-alt\"></i> <b> Mobile Number</b>\r\n            <br />\r\n            <p style=\"color:grey\">{{user.contactDetails[0].mobileNumber}}</p>\r\n          </div>\r\n          <hr />\r\n          <div>\r\n            <i class=\"fa fa-envelope\"></i> <b> Email Address</b>\r\n            <br />\r\n            <p style=\"color:grey\">{{user.contactDetails[0].emailAddress}}</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </mat-tab>\r\n  <mat-tab label=\"Settings\">\r\n    <form [formGroup]=\"myForm\" (ngSubmit)=\"submitForm()\">\r\n      <div style=\"margin-top:5px\" class=\"modal-boy\">\r\n        <div class=\"container\">\r\n\r\n          <div class=\"row\">\r\n\r\n            <div class=\"col-xs-6 col-md-6 col-lg-6\">\r\n              <div class=\"form-group\">\r\n                <img [src]=\"ImageUrl\" style=\"border-radius: 5px; display:block; margin-left:auto; margin-right: auto; width: 50%; height:100px\" />\r\n                <div style=\"margin-top: 10px\" class=\"upload-btn-wrapper\">\r\n                  <button class=\"uploadbtn\">Upload an image</button>\r\n                  <input type=\"file\" #image accept=\"image/*\" (change)=\"handleFileInput($event.target.files)\" formControlName=\"image\" />\r\n                </div>\r\n              </div>\r\n              <div style=\"position: relative\" class=\"form-group\">\r\n                <textarea style=\"height:155px\" formControlName=\"aboutUser\" #aboutuser class=\"form-control\" name=\"aboutUser\" placeholder=\"Give a brief description of yourself\" required></textarea>\r\n                <span style=\"position: absolute; bottom: 10px; left: 10px;\" class=\"fa fa-commenting\"></span>\r\n              </div>\r\n            </div>\r\n\r\n            <div class=\"col-xs-6 col-md-6 col-lg-6\">\r\n              <div class=\"form-group\">\r\n                <div class=\"input-group\">\r\n                  <div class=\"input-group-prepend\">\r\n                    <div class=\"input-group-text bg-white\">\r\n                      <i class=\"fas fa-user-circle\">\r\n                      </i>\r\n                    </div>\r\n                  </div>\r\n                  <input type=\"text\"\r\n                         #name\r\n                         name=\"name\"\r\n                         placeholder=\"Name\"\r\n                         class=\"form-control\"\r\n                         formControlName=\"name\"\r\n                         [disabled]=\"!newForm\"\r\n                         required />\r\n                </div>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                <div class=\"input-group\">\r\n                  <div class=\"input-group-prepend\">\r\n                    <div class=\"input-group-text bg-white\">\r\n                      <i class=\"fas fa-user-circle\">\r\n                      </i>\r\n                    </div>\r\n                  </div>\r\n                  <input type=\"text\"\r\n                         #surname\r\n                         name=\"surname\"\r\n                         placeholder=\"Surname\"\r\n                         class=\"form-control\"\r\n                         formControlName=\"surname\"\r\n                         required />\r\n                </div>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                <div class=\"input-group\">\r\n                  <div class=\"input-group-prepend\">\r\n                    <div class=\"input-group-text bg-white\">\r\n                      <i class=\"fas fa-id-card\">\r\n                      </i>\r\n                    </div>\r\n                  </div>\r\n                  <input type=\"text\"\r\n                         #idnumber\r\n                         name=\"idnumber\"\r\n                         placeholder=\"13 Digit ID Number\"\r\n                         class=\"form-control\"\r\n                         formControlName=\"idNumber\"\r\n                         maxlength=\"13\" minlength=\"13\" />\r\n                </div>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                <div class=\"input-group\">\r\n                  <div class=\"input-group-prepend\">\r\n                    <div class=\"input-group-text bg-white\">\r\n                      <i class=\"fas fa-id-card\">\r\n                      </i>\r\n                    </div>\r\n                  </div>\r\n                  <input type=\"text\"\r\n                         #passportnumber\r\n                         name=\"passportnumber\"\r\n                         placeholder=\"10 Digit Passport Number\"\r\n                         class=\"form-control\"\r\n                         formControlName=\"passportNumber\"\r\n                         maxlength=\"10\" minlength=\"10\" />\r\n                </div>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                <div class=\"input-group\">\r\n                  <div class=\"input-group-prepend\">\r\n                    <div class=\"input-group-text bg-white\">\r\n                      <i style=\"padding-right:7px\" class=\"fas fa-mobile-alt\">\r\n                      </i>\r\n                    </div>\r\n                  </div>\r\n                  <input type=\"text\"\r\n                         #mobilenumber\r\n                         name=\"mobilenumber\"\r\n                         placeholder=\"10 Digit Mobile Number\"\r\n                         class=\"form-control\"\r\n                         formControlName=\"mobileNumber\"\r\n                         required maxlength=\"10\" minlength=\"10\" />\r\n                </div>\r\n              </div>\r\n              <div class=\"form-group\">\r\n                <div class=\"input-group\">\r\n                  <div class=\"input-group-prepend\">\r\n                    <div class=\"input-group-text bg-white\">\r\n                      <i class=\"fas fa-envelope\">\r\n                      </i>\r\n                    </div>\r\n                  </div>\r\n                  <input type=\"text\"\r\n                         #emailaddress\r\n                         name=\"emailaddress\"\r\n                         placeholder=\"Email Address\"\r\n                         class=\"form-control\"\r\n                         formControlName=\"emailAddress\" />\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div class=\"modal-footer\" style=\"width:100%\">\r\n            \r\n            <div class=\"form-group\" style=\"width:100%\">\r\n              <div class=\"btn-group d-flex\" role=\"group\" aria-label=\"\">\r\n                  <button (click)=\"deleteUser(user)\" class=\"btn btn-danger w-100\" [hidden]=\"newForm\" ><i class=\"fas fa-trash\"></i> Delete</button>\r\n                  <button class=\"btn btn-success w-100\" [disabled]=\"image.value == '' || myForm.invalid\"><i class=\"fas fa-database\"></i> Save</button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </form>\r\n\r\n  </mat-tab>\r\n</mat-tab-group>\r\n\r\n  \r\n\r\n"
 
 /***/ }),
 
@@ -52,7 +52,7 @@ module.exports = "<div class=\"modal-header\">\r\n  <h4 class=\"modal-title\">Us
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron\" style=\"background-color: white\">\r\n  <h1 class=\"dispaly-4\">User Manager</h1>\r\n\r\n\r\n\r\n  <div style=\"text-align:right; margin-bottom:5px\">\r\n    <button (click)=\"openFormModal()\" type=\"button\" class=\"btn btn-success\">Add User <i class=\"fas fa-plus\"></i></button>\r\n  </div>\r\n  <div class=\"text-center\">\r\n    <table class=\"table table-hover\">\r\n\r\n      <!--Table head-->\r\n      <thead>\r\n        <tr>\r\n          <th>#</th>\r\n          <th>Name</th>\r\n          <th>Surname</th>\r\n          <th>Id Number</th>\r\n          <th>Passport Number</th>\r\n          <th>Mobile Number</th>\r\n          <th>Email Address</th>\r\n          <th></th>\r\n          <th></th>\r\n        </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n      <!--Table body-->\r\n      <tbody>\r\n        <tr *ngFor=\"let user of service.list; let i = index\">\r\n          <th scope=\"row\">{{i + 1}}</th>\r\n          <td>{{user.name}}</td>\r\n          <td>{{user.surname}}</td>\r\n          <td>{{user.idNumber}}</td>\r\n          <td>{{user.passportNumber}}</td>\r\n          <td>{{user.contactDetails.length > 0 ? user.contactDetails[0].mobileNumber : ''}}</td>\r\n          <td>{{user.contactDetails.length > 0 ? user.contactDetails[0].emailAddress : ''}}</td>\r\n          <td><i style=\"color:blue; cursor: pointer\" (click)=\"openFormModal(user)\" class=\"fas fa-pencil-alt\"></i></td>\r\n          <td><i style=\"color:red; cursor: pointer;\" (click)=\"deleteUser(user)\" class=\"fas fa-trash\"></i></td>\r\n        </tr>\r\n        <tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"jumbotron\" style=\"background-color: white\">\r\n  <h1 class=\"dispaly-4\">User Manager</h1>\r\n\r\n\r\n\r\n  <div style=\"text-align:right; margin-bottom:5px\">\r\n    <button (click)=\"openFormModal()\" type=\"button\" class=\"btn btn-success\">Add User <i class=\"fas fa-plus\"></i></button>\r\n  </div>\r\n  <div class=\"text-center\">\r\n    <table class=\"table table-hover\">\r\n\r\n\r\n      <!--Table head-->\r\n      <thead>\r\n        <tr>\r\n          <th>#</th>\r\n          <th>Name</th>\r\n          <th>Surname</th>\r\n          <th>Id Number</th>\r\n          <th>Passport Number</th>\r\n          <th>Mobile Number</th>\r\n          <th>Email Address</th>\r\n        </tr>\r\n      </thead>\r\n      <!--Table head-->\r\n      <!--Table body-->\r\n      <tbody>\r\n        <tr (click)=\"openFormModal(user)\" style=\"cursor: pointer\" *ngFor=\"let user of service.list; let i = index\">\r\n          <th scope=\"row\">{{i + 1}}</th>\r\n          <td>{{user.name}}</td>\r\n          <td>{{user.surname}}</td>\r\n          <td>{{user.idNumber}}</td>\r\n          <td>{{user.passportNumber}}</td>\r\n          <td>{{user.contactDetails.length > 0 ? user.contactDetails[0].mobileNumber : ''}}</td>\r\n          <td>{{user.contactDetails.length > 0 ? user.contactDetails[0].emailAddress : ''}}</td>\r\n        </tr>\r\n        <tr>\r\n      </tbody>\r\n      <!--Table body-->\r\n\r\n    </table>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -144,13 +144,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm2015/ng-bootstrap.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _users_users_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./users/users.component */ "./src/app/users/users.component.ts");
-/* harmony import */ var _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./users-form-modal/users-form-modal.component */ "./src/app/users-form-modal/users-form-modal.component.ts");
-/* harmony import */ var _shared_users_model__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shared/users.model */ "./src/app/shared/users.model.ts");
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _users_users_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./users/users.component */ "./src/app/users/users.component.ts");
+/* harmony import */ var _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./users-form-modal/users-form-modal.component */ "./src/app/users-form-modal/users-form-modal.component.ts");
+/* harmony import */ var _shared_users_model__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./shared/users.model */ "./src/app/shared/users.model.ts");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+
 
 
 
@@ -169,24 +171,25 @@ let AppModule = class AppModule {
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
         declarations: [
-            _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
-            _users_users_component__WEBPACK_IMPORTED_MODULE_8__["UsersComponent"],
-            _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_9__["UsersFormModalComponent"]
+            _app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"],
+            _users_users_component__WEBPACK_IMPORTED_MODULE_9__["UsersComponent"],
+            _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_10__["UsersFormModalComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
-            _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_7__["AppRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClientModule"],
             _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
-            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_11__["BrowserAnimationsModule"],
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_12__["ToastrModule"].forRoot()
+            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_12__["BrowserAnimationsModule"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_13__["ToastrModule"].forRoot(),
+            _angular_material__WEBPACK_IMPORTED_MODULE_6__["MatTabsModule"]
         ],
-        providers: [_shared_users_model__WEBPACK_IMPORTED_MODULE_10__["Users"]],
-        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]],
+        providers: [_shared_users_model__WEBPACK_IMPORTED_MODULE_11__["Users"]],
+        bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]],
         entryComponents: [
-            _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_9__["UsersFormModalComponent"]
+            _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_10__["UsersFormModalComponent"]
         ]
     })
 ], AppModule);
@@ -306,15 +309,43 @@ let UsersFormModalComponent = class UsersFormModalComponent {
         this.httpService = httpService;
         this.activeModal = activeModal;
         this.formBuilder = formBuilder;
+        this.ImageUrl = "/assets/images/person-placeholder.png";
+        this.fileToUpload = null;
         if (sessionStorage.getItem("CurrentUser"))
             this.newForm = false;
         else
             this.newForm = true;
         this.user = sessionStorage.getItem("CurrentUser") ? JSON.parse(sessionStorage.getItem("CurrentUser")) : {};
+        this.modalTitle = this.user.name ? 'User' : 'New User';
         //Check user is new and add contactdetails field for length check in the createform method
         if (!this.user.name)
             this.user.contactDetails = [];
         this.createForm();
+    }
+    deleteUser(user) {
+        //Update contact first and then update user
+        if (confirm('Are you sure you want to delete this user?')) {
+            this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(res => {
+                this.service.deleteUser(user.name).subscribe(res => {
+                    console.log(res);
+                    this.toastr.warning('User deleted successfully', 'User Manager');
+                    this.service.refreshList();
+                }, err => {
+                    console.log(err);
+                });
+            }, err => {
+                console.log(err);
+            });
+        }
+    }
+    handleFileInput(file) {
+        this.fileToUpload = file.item(0);
+        //Show image preview
+        var reader = new FileReader();
+        reader.onload = (event) => {
+            this.ImageUrl = event.target.result;
+        };
+        reader.readAsDataURL(this.fileToUpload);
     }
     createForm() {
         this.myForm = this.formBuilder.group({
@@ -324,6 +355,8 @@ let UsersFormModalComponent = class UsersFormModalComponent {
             passportNumber: this.user ? this.user.passportNumber : '',
             mobileNumber: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].mobileNumber : '',
             emailAddress: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].emailAddress : '',
+            aboutUser: this.user.aboutUser ? this.user.aboutUser : '',
+            image: this.user.image > 0 ? this.user.image : null,
         });
         if (this.newForm == false)
             this.myForm.controls['name'].disable();
@@ -453,7 +486,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import { Users } from '../shared/users.model';
 
 
 let UsersComponent = class UsersComponent {
@@ -465,22 +497,6 @@ let UsersComponent = class UsersComponent {
     }
     ngOnInit() {
         this.service.refreshList();
-    }
-    deleteUser(user) {
-        //Update contact first and then update user
-        if (confirm('Are you sure you want to delete this user?')) {
-            this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(res => {
-                this.service.deleteUser(user.name).subscribe(res => {
-                    console.log(res);
-                    this.toastr.warning('User deleted successfully', 'User Manager');
-                    this.service.refreshList();
-                }, err => {
-                    console.log(err);
-                });
-            }, err => {
-                console.log(err);
-            });
-        }
     }
     openFormModal(user) {
         if (user) {
@@ -579,7 +595,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Claudia Goma\Documents\UsersAPI\UsersClient\ClientApp\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Claudia Goma\Documents\User-Manager\UsersClient\ClientApp\src\main.ts */"./src/main.ts");
 
 
 /***/ })

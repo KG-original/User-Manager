@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 #toast-container > div {
   opacity:1;
@@ -9,7 +10,57 @@ input.ng-touched.ng-invalid {
   border-color: #dc3545;
 }
 
+
 input.ng-invalid {
   border-color: #28a745;
 }
+textarea.ng-touched.ng-invalid {
+  border-color: #dc3545;
+}
 
+textarea.ng-invalid {
+  border-color: #28a745;
+}
+
+.upload-btn-wrapper {
+  display:block;
+  margin-left:auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.uploadbtn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.container {
+  padding: 5%;
+}
+
+  .container .img {
+    text-align: center;
+  }
+
+  .container .details {
+    border-left: 3px solid #ded4da;
+  }
+
+    .container .details p {
+      font-size: 15px;
+      font-weight: bold;
+    }
