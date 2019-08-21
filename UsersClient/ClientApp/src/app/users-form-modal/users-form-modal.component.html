@@ -13,7 +13,7 @@
         <div class="col-md-6 img">
           <img style="max-width:100%;max-height:100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q" alt="" class="img-rounded">
           <blockquote>
-            <small><cite title="About user">{{user.aboutUser}}something for now to see how it will look</cite></small>
+            <small><cite title="About user">{{user.aboutUser}}</cite></small>
           </blockquote>
         </div>
         <div  class="col-md-5 details">
@@ -22,27 +22,23 @@
           </blockquote>
           <hr />
           <div>
-            <i class="fa fa-id-card"></i> <b> Id Number</b>
-            <br />
-            <p style="color:grey">{{user.idNumber}}</p>
+            <h6><i class="fa fa-id-card"></i> Id Number</h6>
+            <i style="color:grey">{{user.idNumber}}</i>
           </div>
           <hr />
           <div>
-            <i class="fa fa-id-card"></i> <b> Passport Number</b>
-            <br />
-            <p style="color:grey">{{user.passportNumber}}</p>
+            <h6><i class="fa fa-id-card"></i> Passport Number</h6>
+            <i style="color:grey">{{user.passportNumber}}</i>
           </div>
           <hr />
           <div>
-            <i class="fa fa-mobile-alt"></i> <b> Mobile Number</b>
-            <br />
-            <p style="color:grey">{{user.contactDetails[0].mobileNumber}}</p>
+            <h6><i class="fa fa-mobile-alt"></i> Mobile Number</h6>
+            <i style="color:grey">{{user.contactDetails[0].mobileNumber}}</i>
           </div>
           <hr />
           <div>
-            <i class="fa fa-envelope"></i> <b> Email Address</b>
-            <br />
-            <p style="color:grey">{{user.contactDetails[0].emailAddress}}</p>
+            <h6><i class="fa fa-envelope"></i> Email Address</h6>
+            <i style="color:grey">{{user.contactDetails[0].emailAddress}}</i>
           </div>
         </div>
       </div>
@@ -180,7 +176,7 @@
             
             <div class="form-group" style="width:100%">
               <div class="btn-group d-flex" role="group" aria-label="">
-                  <button (click)="deleteUser(user)" class="btn btn-danger w-100" [hidden]="newForm" ><i class="fas fa-trash"></i> Delete</button>
+                  <button (click)="deleteUser(user);  $event.preventDefault()" class="btn btn-danger w-100" [hidden]="newForm" ><i class="fas fa-trash"></i> Delete</button>
                   <button class="btn btn-success w-100" [disabled]="image.value == '' || myForm.invalid"><i class="fas fa-database"></i> Save</button>
               </div>
             </div>

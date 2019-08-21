@@ -37,6 +37,7 @@ export class UsersFormModalComponent implements OnInit {
   deleteUser(user) {
     //Update contact first and then update user
     if (confirm('Are you sure you want to delete this user?')) {
+      this.activeModal.close(this.myForm.value);
       this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(
         res => {
           this.service.deleteUser(user.name).subscribe(
