@@ -18,5 +18,6 @@ namespace UserManager.Models
         public string PassportNumber { get; set; }
 
         public ICollection<ContactDetails> ContactDetails { get; set; }
+        public ICollection<Image> Image { get; set; }
     }
 }

@@ -5,4 +5,5 @@ export class Users {
   idNumber: string;
   passportNumber: string;
   contactDetails: string[];
+  image: string[];
 }

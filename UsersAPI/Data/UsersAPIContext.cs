@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UsersAPI.Models;
 
 namespace UsersAPI.Data
 {
@@ -18,5 +19,6 @@ namespace UsersAPI.Data
 
         public DbSet<Users> Users { get; set; }
         public DbSet<ContactDetails> ContactDetails { get; set; }
+        public DbSet<Image> Image { get; set; }
     }
 }

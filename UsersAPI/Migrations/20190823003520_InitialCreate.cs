@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UsersAPI.Migrations
@@ -42,16 +43,46 @@ namespace UsersAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Image",
+                columns: table => new
+                {
+                    ImageId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AboutUser = table.Column<string>(nullable: true),
+                    ImageName = table.Column<string>(nullable: true),
+                    ImageContent = table.Column<byte[]>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Image", x => x.ImageId);
+                    table.ForeignKey(
+                        name: "FK_Image_Users_Name",
+                        column: x => x.Name,
+                        principalTable: "Users",
+                        principalColumn: "Name",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ContactDetails_UsersName",
                 table: "ContactDetails",
                 column: "UsersName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Image_Name",
+                table: "Image",
+                column: "Name");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ContactDetails");
+
+            migrationBuilder.DropTable(
+                name: "Image");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -23,11 +23,13 @@ export class UsersComponent implements OnInit {
   openFormModal(user) {
     if (user) {
       sessionStorage.setItem("CurrentUser", JSON.stringify(user));
-      sessionStorage.setItem("Id", JSON.stringify(user.contactDetails[0].id));
+      sessionStorage.setItem("ContactId", JSON.stringify(user.contactDetails[0].id));
+
     }
     else {
       sessionStorage.removeItem("CurrentUser");
-      sessionStorage.removeItem("Id");
+      sessionStorage.removeItem("ContactId");
+
     }
       
     const modalRef = this.modalService.open(UsersFormModalComponent);

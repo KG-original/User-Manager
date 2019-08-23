@@ -14,6 +14,7 @@ namespace UsersAPI.Models
         public int ImageId { get; set; }
         public string AboutUser { get; set; }
         public string ImageName { get; set; }
+        public byte[] ImageContent { get; set; }
 
         [ForeignKey("UsersName")]
         public string Name { get; set; }

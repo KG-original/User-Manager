@@ -31,6 +31,13 @@ export class UsersService {
       .then(res =>
       {
         this.list = res as Users[];
+        //Convert all images to base64
+        //for (var i = 0; i < this.list.image.length; i++) {
+        //var bytes = this.list.image[i].imageContent; // get from server
+        //var uints = new UInt8Array(bytes);
+        //var base64 = btoa(String.fromCharCode(null, uints));
+        //this.list.image[i].imageContent = 'data:image/jpeg;base64,' + base64; //
+        //}
         sessionStorage.setItem('UsersList', JSON.stringify(res));
       }
       )
