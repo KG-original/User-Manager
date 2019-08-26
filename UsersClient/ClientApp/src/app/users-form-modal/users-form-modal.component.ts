@@ -1,17 +1,15 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder, FormControl, Validators, NgForm } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { UsersService } from '../shared/users.service';
 import { ToastrService } from 'ngx-toastr';
-import { UploadImageService} from '../shared/upload-image.service'
 
 
 @Component({
   selector: 'app-users-form-modal',
   templateUrl: './users-form-modal.component.html',
   styleUrls: ['./users-form-modal.component.css'],
-  providers: [UploadImageService]
 })
 
 export class UsersFormModalComponent implements OnInit {
@@ -24,8 +22,9 @@ export class UsersFormModalComponent implements OnInit {
   fileToUpload: File = null;
   modalTitle: string;
   image: {};
+  rootUrl = 'http://localhost:61692/api';
 
-  constructor( private imageService: UploadImageService, private toastr: ToastrService, private service: UsersService, private httpService: HttpClient, public activeModal: NgbActiveModal, private formBuilder: FormBuilder) {
+  constructor(private toastr: ToastrService, private service: UsersService, private httpService: HttpClient, public activeModal: NgbActiveModal, private formBuilder: FormBuilder) {
     if (localStorage.getItem("CurrentUser")) {
       this.user = JSON.parse(localStorage.getItem("CurrentUser"));
       this.modalTitle = 'User';
@@ -49,9 +48,9 @@ export class UsersFormModalComponent implements OnInit {
     if (confirm('Are you sure you want to delete this user?')) {
       this.activeModal.close(this.myForm.value);
       this.service.isLoading = true;
-      this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(
+      this.httpService.delete(this.rootUrl + '/ContactDetails/' + user.contactDetails[0].id).subscribe(
         res => {
-          this.httpService.delete('http://localhost:61692/api/Images/' + user.image[0].imageId).subscribe(
+          this.httpService.delete(this.rootUrl + '/Images/' + user.image[0].imageId).subscribe(
             res => {
               this.service.deleteUser(user.name).subscribe(
                 res => {
@@ -176,9 +175,9 @@ export class UsersFormModalComponent implements OnInit {
   UpdateUser(user) {
     //Update contact first and then update user
     this.service.isLoading = true;
-    this.httpService.put('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id, user.contactDetails[0]).subscribe(
+    this.httpService.put(this.rootUrl + '/ContactDetails/' + user.contactDetails[0].id, user.contactDetails[0]).subscribe(
     res => {
-      this.httpService.put('http://localhost:61692/api/Images/' + user.image[0].imageId, user.image[0]).subscribe(
+      this.httpService.put(this.rootUrl + '/Images/' + user.image[0].imageId, user.image[0]).subscribe(
             res => {
               this.service.putUser(user).subscribe(
                 res => {

@@ -277,45 +277,6 @@ var SearchFilterComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/shared/upload-image.service.ts":
-/*!************************************************!*\
-  !*** ./src/app/shared/upload-image.service.ts ***!
-  \************************************************/
-/*! exports provided: UploadImageService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UploadImageService", function() { return UploadImageService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-
-
-
-var UploadImageService = /** @class */ (function () {
-    function UploadImageService(http) {
-        this.http = http;
-    }
-    UploadImageService.prototype.postFile = function (imageData) {
-        var endpoint = 'http://localhost:61692/api/Images';
-        return this.http.post(endpoint, imageData);
-    };
-    UploadImageService.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
-    ]; };
-    UploadImageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-            providedIn: 'root'
-        })
-    ], UploadImageService);
-    return UploadImageService;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/shared/users.model.ts":
 /*!***************************************!*\
   !*** ./src/app/shared/users.model.ts ***!
@@ -429,8 +390,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _shared_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/users.service */ "./src/app/shared/users.service.ts");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
-/* harmony import */ var _shared_upload_image_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../shared/upload-image.service */ "./src/app/shared/upload-image.service.ts");
-
 
 
 
@@ -439,8 +398,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var UsersFormModalComponent = /** @class */ (function () {
-    function UsersFormModalComponent(imageService, toastr, service, httpService, activeModal, formBuilder) {
-        this.imageService = imageService;
+    function UsersFormModalComponent(toastr, service, httpService, activeModal, formBuilder) {
         this.toastr = toastr;
         this.service = service;
         this.httpService = httpService;
@@ -448,6 +406,7 @@ var UsersFormModalComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.ImageUrl = "/assets/images/person-placeholder.png";
         this.fileToUpload = null;
+        this.rootUrl = 'http://localhost:61692/api';
         if (localStorage.getItem("CurrentUser")) {
             this.user = JSON.parse(localStorage.getItem("CurrentUser"));
             this.modalTitle = 'User';
@@ -474,8 +433,8 @@ var UsersFormModalComponent = /** @class */ (function () {
         if (confirm('Are you sure you want to delete this user?')) {
             this.activeModal.close(this.myForm.value);
             this.service.isLoading = true;
-            this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(function (res) {
-                _this.httpService.delete('http://localhost:61692/api/Images/' + user.image[0].imageId).subscribe(function (res) {
+            this.httpService.delete(this.rootUrl + '/ContactDetails/' + user.contactDetails[0].id).subscribe(function (res) {
+                _this.httpService.delete(_this.rootUrl + '/Images/' + user.image[0].imageId).subscribe(function (res) {
                     _this.service.deleteUser(user.name).subscribe(function (res) {
                         console.log(res);
                         _this.toastr.warning('User deleted successfully', 'User Manager');
@@ -581,8 +540,8 @@ var UsersFormModalComponent = /** @class */ (function () {
         var _this = this;
         //Update contact first and then update user
         this.service.isLoading = true;
-        this.httpService.put('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id, user.contactDetails[0]).subscribe(function (res) {
-            _this.httpService.put('http://localhost:61692/api/Images/' + user.image[0].imageId, user.image[0]).subscribe(function (res) {
+        this.httpService.put(this.rootUrl + '/ContactDetails/' + user.contactDetails[0].id, user.contactDetails[0]).subscribe(function (res) {
+            _this.httpService.put(_this.rootUrl + '/Images/' + user.image[0].imageId, user.image[0]).subscribe(function (res) {
                 _this.service.putUser(user).subscribe(function (res) {
                     console.log(res);
                     _this.toastr.info('User updated successfully', 'User Manager');
@@ -603,7 +562,6 @@ var UsersFormModalComponent = /** @class */ (function () {
         this.activeModal.close('Modal Closed');
     };
     UsersFormModalComponent.ctorParameters = function () { return [
-        { type: _shared_upload_image_service__WEBPACK_IMPORTED_MODULE_7__["UploadImageService"] },
         { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] },
         { type: _shared_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"] },
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] },
@@ -617,7 +575,6 @@ var UsersFormModalComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-users-form-modal',
             template: __webpack_require__(/*! raw-loader!./users-form-modal.component.html */ "./node_modules/raw-loader/index.js!./src/app/users-form-modal/users-form-modal.component.html"),
-            providers: [_shared_upload_image_service__WEBPACK_IMPORTED_MODULE_7__["UploadImageService"]],
             styles: [__webpack_require__(/*! ./users-form-modal.component.css */ "./src/app/users-form-modal/users-form-modal.component.css")]
         })
     ], UsersFormModalComponent);
@@ -651,23 +608,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersComponent", function() { return UsersComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../users-form-modal/users-form-modal.component */ "./src/app/users-form-modal/users-form-modal.component.ts");
-/* harmony import */ var _shared_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/users.service */ "./src/app/shared/users.service.ts");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
-
-
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../users-form-modal/users-form-modal.component */ "./src/app/users-form-modal/users-form-modal.component.ts");
+/* harmony import */ var _shared_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/users.service */ "./src/app/shared/users.service.ts");
 
 
 
 
 
 var UsersComponent = /** @class */ (function () {
-    function UsersComponent(toastr, service, httpService, modalService) {
-        this.toastr = toastr;
+    function UsersComponent(service, modalService) {
         this.service = service;
-        this.httpService = httpService;
         this.modalService = modalService;
         this.query = '';
     }
@@ -686,7 +637,7 @@ var UsersComponent = /** @class */ (function () {
             sessionStorage.removeItem("ContactId");
             sessionStorage.removeItem("ImageId");
         }
-        var modalRef = this.modalService.open(_users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_4__["UsersFormModalComponent"]);
+        var modalRef = this.modalService.open(_users_form_modal_users_form_modal_component__WEBPACK_IMPORTED_MODULE_3__["UsersFormModalComponent"]);
         modalRef.componentInstance.user = user;
         modalRef.result.then(function (result) {
             console.log(result);
@@ -695,10 +646,8 @@ var UsersComponent = /** @class */ (function () {
         });
     };
     UsersComponent.ctorParameters = function () { return [
-        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] },
-        { type: _shared_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"] },
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-        { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModal"] }
+        { type: _shared_users_service__WEBPACK_IMPORTED_MODULE_4__["UsersService"] },
+        { type: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbModal"] }
     ]; };
     UsersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

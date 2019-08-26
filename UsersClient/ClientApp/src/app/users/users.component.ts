@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 export class UsersComponent implements OnInit {
   query: string = '';
 
-  constructor(private toastr: ToastrService, private service: UsersService, private httpService: HttpClient, private modalService: NgbModal) { }
+  constructor( private service: UsersService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.service.refreshList();
