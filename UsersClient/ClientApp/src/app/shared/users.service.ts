@@ -8,6 +8,7 @@ export class UsersService {
   formData: Users;
   readonly rootUrl = 'http://localhost:61692/api';
   list: Users[];
+  isLoading: boolean = true;
 
   constructor(private http: HttpClient) { }
 
@@ -27,19 +28,20 @@ export class UsersService {
 
   refreshList() {
     this.http.get(this.rootUrl + '/Users')
-    .toPromise()
-      .then(res =>
-      {
+      .subscribe(
+      res => {
         this.list = res as Users[];
-        //Convert all images to base64
-        //for (var i = 0; i < this.list.image.length; i++) {
-        //var bytes = this.list.image[i].imageContent; // get from server
-        //var uints = new UInt8Array(bytes);
-        //var base64 = btoa(String.fromCharCode(null, uints));
-        //this.list.image[i].imageContent = 'data:image/jpeg;base64,' + base64; //
-        //}
-        sessionStorage.setItem('UsersList', JSON.stringify(res));
+        this.isLoading = false;
+        var userNamesSession = [];
+        for (var i = 0; i < this.list.length; i++) {
+          userNamesSession.push(this.list[i].name)
+        }
+        sessionStorage.setItem('UsersList', JSON.stringify(userNamesSession));
+        console.log('success', res);
+        console.log('success', userNamesSession);
+      },
+      error => {
+        console.log('oops', error)
       }
-      )
-  }
+      )};
 }

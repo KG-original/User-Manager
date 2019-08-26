@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UsersAPI.Data;
 using UsersAPI.Models;
-using System.Drawing;
 
 namespace UsersAPI.Controllers
 {
@@ -18,7 +16,6 @@ namespace UsersAPI.Controllers
     {
         private readonly UsersAPIContext _context;
 
-
         public ImagesController(UsersAPIContext context)
         {
             _context = context;
@@ -26,14 +23,14 @@ namespace UsersAPI.Controllers
 
         // GET: api/Images
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Models.Image>>> GetImage()
+        public async Task<ActionResult<IEnumerable<Image>>> GetImage()
         {
             return await _context.Image.ToListAsync();
         }
 
         // GET: api/Images/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Models.Image>> GetImage(int id)
+        public async Task<ActionResult<Image>> GetImage(int id)
         {
             var image = await _context.Image.FindAsync(id);
 
@@ -47,7 +44,7 @@ namespace UsersAPI.Controllers
 
         // PUT: api/Images/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutImage(int id, Models.Image image)
+        public async Task<IActionResult> PutImage(int id, Image image)
         {
             if (id != image.ImageId)
             {
@@ -77,7 +74,7 @@ namespace UsersAPI.Controllers
 
         // POST: api/Images
         [HttpPost]
-        public async Task<ActionResult<Models.Image>> PostImage(Models.Image image)
+        public async Task<ActionResult<Image>> PostImage(Image image)
         {
             _context.Image.Add(image);
             await _context.SaveChangesAsync();
@@ -87,7 +84,7 @@ namespace UsersAPI.Controllers
 
         // DELETE: api/Images/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Models.Image>> DeleteImage(int id)
+        public async Task<ActionResult<Image>> DeleteImage(int id)
         {
             var image = await _context.Image.FindAsync(id);
             if (image == null)

@@ -11,9 +11,9 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 img">
-          <img style="max-width:100%;max-height:100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvzOpl3-kqfNbPcA_u_qEZcSuvu5Je4Ce_FkTMMjxhB-J1wWin-Q" alt="" class="img-rounded">
+          <img style="max-width:100%;max-height:100%" [src]="ImageUrl" alt="" class="img-rounded">
           <blockquote>
-            <small><cite title="About user">{{user.aboutUser}}</cite></small>
+            <small><cite title="About user">{{user.image.length > 0 ? user.image[0].aboutUser : ''}}</cite></small>
           </blockquote>
         </div>
         <div  class="col-md-5 details">
@@ -58,7 +58,7 @@
                 <img [src]="ImageUrl" style="border-radius: 5px; display:block; margin-left:auto; margin-right: auto; width: 50%; height:100px" />
                 <div style="margin-top: 10px" class="upload-btn-wrapper">
                   <button class="uploadbtn">Upload an image</button>
-                  <input type="file" #image accept="image/*" (change)="handleFileInput($event.target.files)" formControlName="image" />
+                  <input type="file" #image accept="image/*" (change)="handleFileInput($event.target.files)"/>
                 </div>
               </div>
               <div style="position: relative" class="form-group">
@@ -114,7 +114,7 @@
                   <input type="text"
                          #idnumber
                          name="idnumber"
-                         placeholder="13 Digit ID Number"
+                         placeholder="13 Digit ID No."
                          class="form-control"
                          formControlName="idNumber"
                          maxlength="13" minlength="13" />
@@ -131,7 +131,7 @@
                   <input type="text"
                          #passportnumber
                          name="passportnumber"
-                         placeholder="10 Digit Passport Number"
+                         placeholder="10 Digit Passport No."
                          class="form-control"
                          formControlName="passportNumber"
                          maxlength="10" minlength="10" />
@@ -148,7 +148,7 @@
                   <input type="text"
                          #mobilenumber
                          name="mobilenumber"
-                         placeholder="10 Digit Mobile Number"
+                         placeholder="10 Digit Mobile No."
                          class="form-control"
                          formControlName="mobileNumber"
                          required maxlength="10" minlength="10" />
@@ -177,7 +177,7 @@
             <div class="form-group" style="width:100%">
               <div class="btn-group d-flex" role="group" aria-label="">
                   <button (click)="deleteUser(user);  $event.preventDefault()" class="btn btn-danger w-100" [hidden]="newForm" ><i class="fas fa-trash"></i> Delete</button>
-                  <button class="btn btn-success w-100" [disabled]="image.value == '' || myForm.invalid"><i class="fas fa-database"></i> Save</button>
+                  <button class="btn btn-success w-100" [disabled]="ImageUrl.indexOf('person-placeholder.png') > -1 || myForm.invalid"><i class="fas fa-database"></i> Save</button>
               </div>
             </div>
           </div>

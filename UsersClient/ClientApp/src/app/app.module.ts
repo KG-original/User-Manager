@@ -8,6 +8,7 @@ import { MatTabsModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
+import { startsWithPipe } from './search-filter/search-filter.component';
 import { UsersFormModalComponent } from './users-form-modal/users-form-modal.component';
 import { Users } from './shared/users.model';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +19,8 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     AppComponent,
     UsersComponent,
-    UsersFormModalComponent
+    UsersFormModalComponent,
+    startsWithPipe
   ],
   imports: [
     BrowserModule,

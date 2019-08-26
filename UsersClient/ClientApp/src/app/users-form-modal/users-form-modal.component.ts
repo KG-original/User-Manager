@@ -20,23 +20,27 @@ export class UsersFormModalComponent implements OnInit {
   myForm: FormGroup;
   newForm: boolean;
   ImageUrl: string = "/assets/images/person-placeholder.png";
-  ImageBytes;
+  ImageName: string;
   fileToUpload: File = null;
   modalTitle: string;
   image: {};
 
   constructor( private imageService: UploadImageService, private toastr: ToastrService, private service: UsersService, private httpService: HttpClient, public activeModal: NgbActiveModal, private formBuilder: FormBuilder) {
-    if (sessionStorage.getItem("CurrentUser"))
+    if (localStorage.getItem("CurrentUser")) {
+      this.user = JSON.parse(localStorage.getItem("CurrentUser"));
+      this.modalTitle = 'User';
+      if (this.user.image.length > 0) {
+        this.ImageUrl = this.user.image[0].imageContent;
+        this.ImageName = this.user.image[0].imageName;
+      }
       this.newForm = false;
-    else
+    } else {
+      this.user = {};
       this.newForm = true;
-    this.user = sessionStorage.getItem("CurrentUser") ? JSON.parse(sessionStorage.getItem("CurrentUser")) : {};
-    this.modalTitle = this.user.name ? 'User' : 'New User';
-    //Check user is new and add contactdetails field for length check in the createform method
-    if (!this.user.name) {
-      this.user.contactDetails = [];
-      this.user.image = [];
-    };
+      this.modalTitle = 'New User';
+    }
+    if (!this.user.image) this.user.image = [];
+    if (!this.user.contactDetails) this.user.contactDetails = [];
     this.createForm();
   }
 
@@ -44,13 +48,21 @@ export class UsersFormModalComponent implements OnInit {
     //Update contact first and then update user
     if (confirm('Are you sure you want to delete this user?')) {
       this.activeModal.close(this.myForm.value);
+      this.service.isLoading = true;
       this.httpService.delete('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id).subscribe(
         res => {
-          this.service.deleteUser(user.name).subscribe(
+          this.httpService.delete('http://localhost:61692/api/Images/' + user.image[0].imageId).subscribe(
             res => {
-              console.log(res);
-              this.toastr.warning('User deleted successfully', 'User Manager');
-              this.service.refreshList();
+              this.service.deleteUser(user.name).subscribe(
+                res => {
+                  console.log(res);
+                  this.toastr.warning('User deleted successfully', 'User Manager');
+                  this.service.refreshList();
+                },
+                err => {
+                  console.log(err);
+                }
+              );
             },
             err => {
               console.log(err);
@@ -71,24 +83,8 @@ export class UsersFormModalComponent implements OnInit {
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.ImageUrl = event.target.result;
-      //Convert image to bytes
-      this.ImageBytes = this.convertDataURIToBinary(this.ImageUrl);
     }
     reader.readAsDataURL(this.fileToUpload);
-  }
-
-  private convertDataURIToBinary(dataURI) {
-    var BASE64_MARKER = ';base64,';
-    var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-    var base64 = dataURI.substring(base64Index);
-    var raw = window.atob(base64);
-    var rawLength = raw.length;
-    var array = new Uint8Array(new ArrayBuffer(rawLength));
-
-    for (let i = 0; i < rawLength; i++) {
-      array[i] = raw.charCodeAt(i);
-    }
-    return array;
   }
 
   private createForm() {
@@ -99,10 +95,9 @@ export class UsersFormModalComponent implements OnInit {
       passportNumber: this.user ? this.user.passportNumber : '',
       mobileNumber: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].mobileNumber : '',
       emailAddress: this.user.contactDetails.length > 0 ? this.user.contactDetails[0].emailAddress : '',
-      aboutUser: this.user.aboutUser ? this.user.aboutUser : '',
-      image: this.user.image > 0 ? this.user.image : null,
+      aboutUser: this.user.image.length > 0 ? this.user.image[0].aboutUser : '',
     });
-    if (this.newForm == false) this.myForm.controls['name'].disable();
+    if (!this.newForm) this.myForm.controls['name'].disable();
   }
 
   public submitForm() {
@@ -110,11 +105,14 @@ export class UsersFormModalComponent implements OnInit {
     this.activeModal.close(this.myForm.value);
 
     //create image object
-    this.image = { aboutUser: this.myForm.value.aboutUser, imageName: this.myForm.value.image, imageContent: this.ImageBytes, name: this.myForm.value.name };
+    if (sessionStorage.getItem("ImageId"))
+      this.image = { imageId: sessionStorage.getItem("ImageId"), aboutUser: this.myForm.value.aboutUser, imageName: this.fileToUpload ?  this.fileToUpload.name : this.ImageName, imageContent: this.ImageUrl, name: JSON.parse(localStorage.getItem('CurrentUser')).name };
+    else
+      this.image = { aboutUser: this.myForm.value.aboutUser, imageName: this.fileToUpload.name, imageContent: this.ImageUrl, name: this.myForm.value.name}
     //push into object filed
     this.myForm.value.image = [];
+    JSON.stringify(this.image);
     this.myForm.value.image.push(this.image);
-    JSON.stringify(this.myForm.value.image);
 
     //Create contact object
     let contact = {};
@@ -127,17 +125,17 @@ export class UsersFormModalComponent implements OnInit {
     this.myForm.value.contactDetails = [];
 
     //push object into field
+    JSON.stringify(contact);
     this.myForm.value.contactDetails.push(contact);
-    JSON.stringify(this.myForm.value.contactDetails);
 
     //delete fields as they are not part of original users model
     delete this.myForm.value.mobileNumber;
     delete this.myForm.value.emailAddress;
     delete this.myForm.value.aboutUser;
 
-    if (sessionStorage.getItem('CurrentUser')) {
+    if (localStorage.getItem('CurrentUser')) {
       //disable() somehow removed user field
-      this.myForm.value.name = JSON.parse(sessionStorage.getItem('CurrentUser')).name;
+      this.myForm.value.name = JSON.parse(localStorage.getItem('CurrentUser')).name;
       this.UpdateUser(this.myForm.value);
     } else {
       this.AddUser(this.myForm.value);
@@ -148,7 +146,7 @@ export class UsersFormModalComponent implements OnInit {
   checkUserExists(name) {
    var usersList = JSON.parse(sessionStorage.getItem('UsersList'));
     for (var i = 0; i < usersList.length; i++) {
-      if (usersList[i].name.toLowerCase() == name.toLowerCase()) {
+      if (usersList[i].toLowerCase() == name.toLowerCase()) {
         return true;
       }
     }
@@ -158,17 +156,18 @@ export class UsersFormModalComponent implements OnInit {
   AddUser(user) {
     var userexists = this.checkUserExists(user.name);
     if (userexists) {
+      this.activeModal.close();
       this.toastr.info('User Name Already Exists', 'User Manager');
-      this.service.refreshList();
     } else {
+      this.service.isLoading = true;
       this.service.postUser(user).subscribe(
         res => {
               console.log(res);
-              this.toastr.success('User created successfully', 'User Manager');
-              this.service.refreshList();
+          this.toastr.success('User created successfully', 'User Manager');
+          this.service.refreshList();
         },
         err => {
-          console.log(err);
+               console.log(err);
         }
       )
     }
@@ -176,13 +175,21 @@ export class UsersFormModalComponent implements OnInit {
 
   UpdateUser(user) {
     //Update contact first and then update user
+    this.service.isLoading = true;
     this.httpService.put('http://localhost:61692/api/ContactDetails/' + user.contactDetails[0].id, user.contactDetails[0]).subscribe(
     res => {
-          this.service.putUser(user).subscribe(
+      this.httpService.put('http://localhost:61692/api/Images/' + user.image[0].imageId, user.image[0]).subscribe(
             res => {
-              console.log(res);
-              this.toastr.info('User updated successfully', 'User Manager');
-              this.service.refreshList();
+              this.service.putUser(user).subscribe(
+                res => {
+                  console.log(res);
+                  this.toastr.info('User updated successfully', 'User Manager');
+                  this.service.refreshList();
+                },
+                err => {
+                  console.log(err);
+                }
+              )
             },
             err => {
               console.log(err);

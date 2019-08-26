@@ -6125,6 +6125,9 @@ __webpack_require__.r(__webpack_exports__);
  * Zone JS is required by default for Angular itself.
  */
  // Included with Angular CLI.
+//(window as any).global = window;
+// @ts-ignore
+//window.Buffer = window.Buffer || require('buffer').Buffer;
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */

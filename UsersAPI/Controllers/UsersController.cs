@@ -25,7 +25,7 @@ namespace UsersAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Users>>> GetUsers()
         {
-            return await _context.Users.Include(i => i.ContactDetails).ToListAsync();
+            return await _context.Users.Include(i => i.ContactDetails).Include(i => i.Image).ToListAsync();
         }
 
         // GET: api/Users/5
@@ -34,6 +34,7 @@ namespace UsersAPI.Controllers
         {
             var users = await _context.Users
                 .Include(i => i.ContactDetails)
+                .Include(i => i.Image)
                 .FirstOrDefaultAsync(i => i.Name == id);
 
             if (users == null)

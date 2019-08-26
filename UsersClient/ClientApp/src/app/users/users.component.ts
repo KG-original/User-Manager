@@ -4,32 +4,37 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsersFormModalComponent } from './../users-form-modal/users-form-modal.component';
 import { UsersService } from '../shared/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { Users } from '../shared/users.model';
+import { startsWithPipe } from '../search-filter/search-filter.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
+
 export class UsersComponent implements OnInit {
+  query: string = '';
 
   constructor(private toastr: ToastrService, private service: UsersService, private httpService: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.service.refreshList();
   }
-
   
 
   openFormModal(user) {
     if (user) {
-      sessionStorage.setItem("CurrentUser", JSON.stringify(user));
-      sessionStorage.setItem("ContactId", JSON.stringify(user.contactDetails[0].id));
+      localStorage.setItem("CurrentUser", JSON.stringify(user));
+      sessionStorage.setItem("ContactId", user.contactDetails[0].id);
+      if (user.image.length > 0)sessionStorage.setItem("ImageId", user.image[0].imageId);
 
     }
     else {
-      sessionStorage.removeItem("CurrentUser");
+      localStorage.removeItem("CurrentUser");
       sessionStorage.removeItem("ContactId");
-
+      sessionStorage.removeItem("ImageId");
     }
       
     const modalRef = this.modalService.open(UsersFormModalComponent);
